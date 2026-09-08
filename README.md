@@ -3,6 +3,17 @@
 WebGIS prototype for semi-automated multitemporal and multispectral analysis
 of Sentinel-2 imagery.
 
+Sentinel-2 Multispectral Analyzer is an open-source WebGIS platform developed by the University of Messina within the EO4DES – Earth Observation for Desertification project.
+
+The platform integrates Google Earth Engine, Python/Flask, and Leaflet to support semi-automated multispectral and multitemporal analysis of Sentinel-2 Level-2A imagery. Users can interactively define an Area of Interest, search and select satellite acquisitions, compute spectral indices such as NDVI and NDRE, and compare user-selected spectral bands through descriptive statistics, scatterplots, histograms, and interactive map visualization.
+
+The platform is designed as an extensible framework for Earth Observation data analysis, with future developments including additional processing modules and machine-learning approaches.
+
+Developed by: University of Messina
+Project: EO4DES – Earth Observation for Desertification
+Link: https://eo4des.github.io/project/
+
+
 ## V1 scientific logic
 
 The demo has two independent analysis branches.
