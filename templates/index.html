@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentinel-2 Multispectral Analyzer</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <h1>Sentinel-2 Multispectral Analyzer</h1>
+
+    <div class="project-logos">
+      <img src="{{ url_for('static', filename='img/unime.png') }}"
+           alt="University of Messina">
+      <img src="{{ url_for('static', filename='img/eo4des.png') }}"
+           alt="EO4DES Project">
+</div>
+
+    <section class="panel">
+      <h2>1. Area of Interest</h2>
+      <p>Draw a polygon or rectangle directly on the map.</p>
+    </section>
+
+    <section class="panel">
+      <h2>2. Temporal search</h2>
+
+      <label for="startDate">From</label>
+      <input id="startDate" type="date" value="2025-01-01">
+
+      <label for="endDate">To</label>
+      <input id="endDate" type="date" value="2025-12-31">
+
+      <label for="cloudCover">Maximum scene cloud cover (%)</label>
+      <input id="cloudCover" type="number" min="0" max="100" value="10">
+
+      <button id="searchBtn">Search acquisitions</button>
+    </section>
+
+    <section class="panel">
+      <h2>3. Multitemporal selection</h2>
+
+      <label for="t1">Acquisition T1</label>
+      <select id="t1"></select>
+
+      <label for="t2">Acquisition T2</label>
+      <select id="t2"></select>
+
+      <p class="hint">
+        Dates are mosaicked automatically if the AOI intersects more than one Sentinel-2 tile.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>4. Band selection · max 2</h2>
+      <p class="hint">
+        These bands are used only for scatterplots and histograms.
+        NDVI and NDRE retrieve their required bands automatically.
+      </p>
+
+      <label for="band1">Band 1</label>
+      <select id="band1">
+        <option value="B2">B2 · Blue · 10 m</option>
+        <option value="B3">B3 · Green · 10 m</option>
+        <option value="B4" selected>B4 · Red · 10 m</option>
+        <option value="B5">B5 · Red Edge 1 · 20 m</option>
+        <option value="B6">B6 · Red Edge 2 · 20 m</option>
+        <option value="B7">B7 · Red Edge 3 · 20 m</option>
+        <option value="B8">B8 · NIR · 10 m</option>
+        <option value="B8A">B8A · Narrow NIR · 20 m</option>
+        <option value="B11">B11 · SWIR 1 · 20 m</option>
+        <option value="B12">B12 · SWIR 2 · 20 m</option>
+      </select>
+
+      <label for="band2">Band 2</label>
+      <select id="band2">
+        <option value="B2">B2 · Blue · 10 m</option>
+        <option value="B3">B3 · Green · 10 m</option>
+        <option value="B4">B4 · Red · 10 m</option>
+        <option value="B5">B5 · Red Edge 1 · 20 m</option>
+        <option value="B6">B6 · Red Edge 2 · 20 m</option>
+        <option value="B7">B7 · Red Edge 3 · 20 m</option>
+        <option value="B8" selected>B8 · NIR · 10 m</option>
+        <option value="B8A">B8A · Narrow NIR · 20 m</option>
+        <option value="B11">B11 · SWIR 1 · 20 m</option>
+        <option value="B12">B12 · SWIR 2 · 20 m</option>
+      </select>
+    </section>
+
+    <section class="panel">
+      <h2>5. Analysis</h2>
+
+      <h3>Spectral indices</h3>
+      <div class="checks">
+        <label><input type="checkbox" name="analysis" value="ndvi"> NDVI</label>
+        <label><input type="checkbox" name="analysis" value="ndre"> NDRE</label>
+      </div>
+
+      <h3>Selected-band analysis</h3>
+      <div class="checks">
+        <label><input type="checkbox" name="analysis" value="scatterplot"> Scatterplot</label>
+        <label><input type="checkbox" name="analysis" value="histogram"> Histogram</label>
+      </div>
+
+      <button id="runBtn">Run analysis</button>
+    </section>
+
+    <div id="message" class="message">Draw an AOI to start.</div>
+  </aside>
+
+  <main class="workspace">
+    <div id="map"></div>
+
+    <section id="resultsPanel" class="results-panel">
+      <h2>Analysis results</h2>
+      <div id="summary"></div>
+      <div id="indexResults"></div>
+      <div id="charts"></div>
+
+      <details>
+        <summary>Development JSON</summary>
+        <pre id="results">No analysis executed.</pre>
+      </details>
+    </section>
+  </main>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

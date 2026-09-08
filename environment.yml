@@ -1,0 +1,14 @@
+name: sentinel_webgis
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - flask
+  - numpy
+  - pandas
+  - rasterio
+  - matplotlib
+  - scikit-learn
+  - pip
+  - pip:
+      - earthengine-api

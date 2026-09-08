@@ -1,0 +1,7 @@
+Flask
+earthengine-api
+numpy
+pandas
+rasterio
+matplotlib
+scikit-learn
